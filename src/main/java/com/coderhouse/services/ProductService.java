@@ -27,7 +27,7 @@ public class ProductService {
 	}
 
 	@Transactional
-	public Product updateClient(Long id, Product productDetails) {
+	public Product updateProduct(Long id, Product productDetails) {
 		Product product = productRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Product not found"));
 

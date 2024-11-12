@@ -47,8 +47,6 @@ public class ProductController {
 		}
 	}
 
-	
-
 	@PostMapping
 	public ResponseEntity<Product> createProduct(@RequestBody Product product) {
 		try {

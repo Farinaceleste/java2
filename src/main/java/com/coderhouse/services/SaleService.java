@@ -41,7 +41,7 @@ public class SaleService {
 
 	public void deleteSale(Long id) {
 		if (!saleRepository.existsById(id)) {
-			throw new IllegalArgumentException("Client not found");
+			throw new IllegalArgumentException("Sale not found");
 		}
 
 		saleRepository.deleteById(id);

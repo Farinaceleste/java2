@@ -45,8 +45,9 @@ public class ClientController {
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
-
 	}
+
+	
 
 	@PostMapping
 	public ResponseEntity<Client> createClient(@RequestBody Client client) {
