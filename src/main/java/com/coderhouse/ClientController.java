@@ -3,6 +3,7 @@ package com.coderhouse;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,35 +13,49 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.coderhouse.models.Client;
-import com.coderhouse.models.Product;
-import com.coderhouse.repositories.ClientRepository;
+import com.coderhouse.services.ClientService;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api/clients")
+
 public class ClientController {
-	
+
 	@Autowired
-	private ClientRepository clientRepository;
-	
+	private ClientService clientService;
+
 	@GetMapping
-	public List<Client> getAllClients() {
-		return clientRepository.findAll();
-	}
-	
-	@GetMapping("/{id}")
-	public ResponseEntity<Client> getClientById(@PathVariable Long id){
-		if(clientRepository.existsById(id)) {
-			Client client = clientRepository.findById(id).get();
-			return ResponseEntity.ok(client);
-		} else {
-			return ResponseEntity.notFound().build();
+	public ResponseEntity<List<Client>> getAllClients() {
+
+		try {
+			List<Client> clients = clientService.getAllClients();
+			return ResponseEntity.ok(clients);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
+
 	}
-	
+
+	@GetMapping("/{id")
+	public ResponseEntity<Client> findById(@PathVariable Long id) {
+		try {
+			Client client = clientService.findClientById(id);
+			return ResponseEntity.ok(client);
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.notFound().build();
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+
+	}
+
 	@PostMapping
-	public Client createClient(@RequestBody Client client) {
-		return clientRepository.save(client);
-		
+	public ResponseEntity<Client> createClient(@RequestBody Client client) {
+		try {
+			Client createdClient = clientService.saveClient(client);
+			return ResponseEntity.ok(createdClient);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 	}
 
 }

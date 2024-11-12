@@ -3,6 +3,9 @@ package com.coderhouse.models;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -27,12 +30,15 @@ public class Sale {
         joinColumns = @JoinColumn(name = "sale_id"),
         inverseJoinColumns = @JoinColumn(name = "product_id")
     )
+    
+    @JsonIgnore
     private List<Product> products = new ArrayList<>();
     
     public Sale() {
 		super();
 
 	}
+    
     
 	public Sale(String name,  Client client, List<Product> products) {
 		super();
