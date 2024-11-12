@@ -35,7 +35,7 @@ public class SaleController {
 
 	}
 
-	@GetMapping("/{id")
+	@GetMapping("/id")
 	public ResponseEntity<Sale> findById(@PathVariable Long id) {
 		try {
 			Sale sale = saleService.findSaleById(id);

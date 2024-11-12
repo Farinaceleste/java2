@@ -3,12 +3,14 @@ package com.coderhouse.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.coderhouse.models.Product	;
 import com.coderhouse.repositories.ProductRepository;
 
 import jakarta.transaction.Transactional;
 
+@Service
 public class ProductService {
 	
 	@Autowired
