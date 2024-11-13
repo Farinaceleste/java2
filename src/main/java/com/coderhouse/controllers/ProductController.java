@@ -1,4 +1,4 @@
-package com.coderhouse;
+package com.coderhouse.controllers;
 
 import java.util.List;
 

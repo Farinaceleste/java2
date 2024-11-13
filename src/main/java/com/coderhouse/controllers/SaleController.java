@@ -1,4 +1,4 @@
-package com.coderhouse;
+package com.coderhouse.controllers;
 
 import java.util.List;
 
@@ -14,24 +14,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.coderhouse.models.Client;
 import com.coderhouse.models.Product;
-import com.coderhouse.services.ClientService;
+import com.coderhouse.models.Sale;
+import com.coderhouse.services.SaleService;
 
 @RestController
-@RequestMapping("/api/clients")
+@RequestMapping("/api/sales")
 
-public class ClientController {
+public class SaleController {
 
 	@Autowired
-	private ClientService clientService;
+	private SaleService saleService;
 
 	@GetMapping
-	public ResponseEntity<List<Client>> getAllClients() {
+	public ResponseEntity<List<Sale>> getAllSales() {
 
 		try {
-			List<Client> clients = clientService.getAllClients();
-			return ResponseEntity.ok(clients);
+			List<Sale> sales = saleService.getAllSales();
+			return ResponseEntity.ok(sales);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
@@ -39,34 +39,32 @@ public class ClientController {
 	}
 
 	@GetMapping("{/id}")
-	public ResponseEntity<Client> findById(@PathVariable Long id) {
+	public ResponseEntity<Sale> findById(@PathVariable Long id) {
 		try {
-			Client client = clientService.findClientById(id);
-			return ResponseEntity.ok(client);
+			Sale sale = saleService.findSaleById(id);
+			return ResponseEntity.ok(sale);
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.notFound().build();
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
-
-	
 
 	@PostMapping
-	public ResponseEntity<Client> createClient(@RequestBody Client client) {
+	public ResponseEntity<Sale> createSale(@RequestBody Sale sale) {
 		try {
-			Client createdClient = clientService.saveClient(client);
-			return ResponseEntity.ok(createdClient);
+			Sale createdSale = saleService.saveSale(sale);
+			return ResponseEntity.ok(createdSale);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
-	
+
 	@PutMapping
-	public ResponseEntity<Client> updateClient(@PathVariable Long id, @RequestBody Client clientDetails) {
+	public ResponseEntity<Sale> updateSale(@PathVariable Long id, @RequestBody Sale saleDetails) {
 		try {
-			Client updatedClient = clientService.updateClient(id, clientDetails);
-			return ResponseEntity.ok(updatedClient);
+			Sale updatedSale = saleService.updateSale(id, saleDetails);
+			return ResponseEntity.ok(updatedSale);
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.notFound().build();
 		} catch (Exception e) {
@@ -74,11 +72,11 @@ public class ClientController {
 		}
 
 	}
-	
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteClient(@PathVariable Long id) {
+	public ResponseEntity<Void> deleteSale(@PathVariable Long id) {
 		try {
-			clientService.deleteClient(id);
+			saleService.deleteSale(id);
 			return ResponseEntity.noContent().build();
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.notFound().build();
