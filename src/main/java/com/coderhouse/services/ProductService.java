@@ -24,6 +24,7 @@ public class ProductService {
 		return productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Product not found"));
 	}
 
+	@Transactional
 	public Product saveProduct(Product product) {
 		return productRepository.save(product);
 	}
@@ -48,4 +49,6 @@ public class ProductService {
 
 		productRepository.deleteById(id);
 	}
+	
+	
 }

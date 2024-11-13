@@ -24,6 +24,7 @@ public class ClientService {
 		return clientRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Client not found"));
 	}
 
+	@Transactional
 	public Client saveClient(Client client) {
 		return clientRepository.save(client);
 	}

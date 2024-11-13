@@ -36,9 +36,7 @@ public class Sale {
     
     public Sale() {
 		super();
-
 	}
-    
     
 	public Sale(String name,  Client client, List<Product> products) {
 		super();
@@ -46,8 +44,6 @@ public class Sale {
 		this.client = client;
 		this.products = products;
 	}
-
-
 
 	public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

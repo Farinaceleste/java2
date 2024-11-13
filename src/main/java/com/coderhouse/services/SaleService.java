@@ -24,6 +24,7 @@ public class SaleService {
 		return saleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Sale not found"));
 	}
 
+	@Transactional
 	public Sale saveSale(Sale sale) {
 		return saleRepository.save(sale);
 	}
@@ -46,4 +47,5 @@ public class SaleService {
 
 		saleRepository.deleteById(id);
 	}
+	
 }
