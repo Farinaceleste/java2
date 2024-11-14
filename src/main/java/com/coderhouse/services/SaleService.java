@@ -1,11 +1,17 @@
 package com.coderhouse.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.coderhouse.DTO.ProductDTO;
+import com.coderhouse.DTO.SaleDTO;
+import com.coderhouse.models.Product;
 import com.coderhouse.models.Sale;
+import com.coderhouse.repositories.ClientRepository;
+import com.coderhouse.repositories.ProductRepository;
 import com.coderhouse.repositories.SaleRepository;
 
 import jakarta.transaction.Transactional;
@@ -15,6 +21,8 @@ public class SaleService {
 
 	@Autowired
 	private SaleRepository saleRepository;
+	private ClientRepository clientRepository;
+	private ProductRepository productRepository;
 
 	public List<Sale> getAllSales() {
 		return saleRepository.findAll();
@@ -47,5 +55,9 @@ public class SaleService {
 
 		saleRepository.deleteById(id);
 	}
+	
+	
+	
+	
 	
 }

@@ -38,7 +38,7 @@ public class ProductController {
 
 	}
 
-	@GetMapping("{/id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<Product> findById(@PathVariable Long id) {
 		try {
 			Product product = productService.findProductById(id);
@@ -85,5 +85,6 @@ public class ProductController {
 		}
 
 	}
+	
 
 }

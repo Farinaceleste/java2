@@ -6,15 +6,24 @@ public class ProductDTO {
 	private String productName;
 	private int quantity;
 	private Double price;
+	private Long id;
+	private String description;
 	
-	
-	public ProductDTO(String productName, int quantity, Double price) {
+
+	public ProductDTO(String productName, int quantity, Double price, Long id, String description) {
 		super();
 		this.productName = productName;
 		this.quantity = quantity;
 		this.price = price;
+		this.id = id;
+		this.description = description;
 	}
 
+
+	public ProductDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	public String getProductName() {
 		return productName;
@@ -46,10 +55,33 @@ public class ProductDTO {
 	}
 
 
+	public Long getId() {
+		return id;
+	}
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+	public String getDescription() {
+		return description;
+	}
+
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+
 	@Override
 	public String toString() {
-		return "ProductDTO [productName=" + productName + ", quantity=" + quantity + ", price=" + price + "]";
+		return "ProductDTO [productName=" + productName + ", quantity=" + quantity + ", price=" + price + ", id=" + id
+				+ ", description=" + description + "]";
 	}
+
+
 	
 	
 	

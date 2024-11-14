@@ -21,6 +21,7 @@ public class Product {
     @ManyToMany(mappedBy = "products")
     private List<Sale> sales = new ArrayList<>();
 
+
     public Product() {
 		super();
 	}

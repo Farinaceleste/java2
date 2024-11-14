@@ -7,16 +7,18 @@ public class SaleDTO {
 
 	private String client_name;
 	private String client_email;
-	private List<ProductDTO> productDetails;
+	private Long client_id;
+	private Long productDetails;
 	private Double totalAmount;
 	private LocalDateTime purchaseDate;
 	
-	
-	public SaleDTO(String client_name, String client_email, List<ProductDTO> productDetails, Double totalAmount,
+
+	public SaleDTO(String client_name, String client_email, Long client_id, Long productDetails, Double totalAmount,
 			LocalDateTime purchaseDate) {
 		super();
 		this.client_name = client_name;
 		this.client_email = client_email;
+		this.client_id = client_id;
 		this.productDetails = productDetails;
 		this.totalAmount = totalAmount;
 		this.purchaseDate = purchaseDate;
@@ -43,12 +45,22 @@ public class SaleDTO {
 	}
 
 
-	public List<ProductDTO> getProductDetails() {
+	public Long getClient_id() {
+		return client_id;
+	}
+
+
+	public void setClient_id(Long client_id) {
+		this.client_id = client_id;
+	}
+
+
+	public Long getProductDetails() {
 		return productDetails;
 	}
 
 
-	public void setProductDetails(List<ProductDTO> productDetails) {
+	public void setProductDetails(Long productDetails) {
 		this.productDetails = productDetails;
 	}
 
@@ -75,12 +87,13 @@ public class SaleDTO {
 
 	@Override
 	public String toString() {
-		return "SaleDTO [client_name=" + client_name + ", client_email=" + client_email + ", productDetails="
-				+ productDetails + ", totalAmount=" + totalAmount + ", purchaseDate=" + purchaseDate + "]";
+		return "SaleDTO [client_name=" + client_name + ", client_email=" + client_email + ", client_id=" + client_id
+				+ ", productDetails=" + productDetails + ", totalAmount=" + totalAmount + ", purchaseDate="
+				+ purchaseDate + "]";
 	}
-	
-	
-	
+
+
+
 	
 	
 	
