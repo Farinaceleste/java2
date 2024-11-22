@@ -5,50 +5,43 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.coderhouse.apis.ProductRestApi;
+import com.coderhouse.interfaces.ProductRestInterface;
 import com.coderhouse.models.Product	;
-import com.coderhouse.repositories.ProductRepository;
 
 import jakarta.transaction.Transactional;
 
 @Service
-public class ProductService {
+public class ProductService implements ProductRestInterface{
 	
 	@Autowired
-	private ProductRepository productRepository;
+	private ProductRestApi productRestApi;
 
+	@Override
 	public List<Product> getAllProducts() {
-		return productRepository.findAll();
+		return productRestApi.getAllProducts();
 	}
-
-	public Product findProductById(Long id) {
-		return productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Product not found"));
+	
+	@Override
+	public Product getProductById(String id) {
+		return productRestApi.getProductById(id);
 	}
-
-	@Transactional
-	public Product saveProduct(Product product) {
-		return productRepository.save(product);
+	
+	@Override
+	public Product addProduct(Product product) {
+		return productRestApi.addProduct(product);
 	}
-
-	@Transactional
-	public Product updateProduct(Long id, Product productDetails) {
-		Product product = productRepository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Product not found"));
-
-		product.setTitle(productDetails.getTitle());
-		product.setDescription(productDetails.getDescription());
-		product.setStock(productDetails.getStock());
-		product.setPrice(productDetails.getPrice());
-
-		return productRepository.save(product);
+	
+	@Override
+	public Product updateProduct(Product product) {
+		return productRestApi.updateProduct(product);
 	}
-
+	
+	@Override
 	public void deleteProduct(Long id) {
-		if (!productRepository.existsById(id)) {
-			throw new IllegalArgumentException("Product not found");
-		}
-
-		productRepository.deleteById(id);
+		return productRestApi.deleteProduct(id);
 	}
+	
 	
 	
 }

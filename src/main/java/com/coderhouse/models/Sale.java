@@ -6,19 +6,35 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 @Entity
+@Schema(description="Sale Model")
 @Table(name = "Sales")
 public class Sale {
-
+	
+    @Schema(description="Sale ID", requiredMode = Schema.RequiredMode.REQUIRED)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name")
+    @Schema(description="Sale name", requiredMode = Schema.RequiredMode.REQUIRED)
     private String name;
+    @Schema(description="Creation Date", requiredMode = Schema.RequiredMode.REQUIRED)
     private LocalDateTime createdAt = LocalDateTime.now();
+    
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", nullable = false)
@@ -33,31 +49,5 @@ public class Sale {
     
     @JsonIgnore
     private List<Product> products = new ArrayList<>();
-    
-    public Sale() {
-		super();
-	}
-    
-	public Sale(String name,  Client client, List<Product> products) {
-		super();
-		this.name = name;
-		this.client = client;
-		this.products = products;
-	}
 
-	public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
-    public Client getClient() { return client; }
-    public void setClient(Client client) { this.client = client; }
-    public List<Product> getProducts() { return products; }
-    public void setProducts(List<Product> products) { this.products = products; }
-
-    @Override
-    public String toString() {
-        return "Sale [id=" + id + ", name=" + name + ", createdAt=" + createdAt + ", client=" + client + "]";
-    }
 }
