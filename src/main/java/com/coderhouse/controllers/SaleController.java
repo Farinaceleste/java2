@@ -18,14 +18,29 @@ import com.coderhouse.models.Product;
 import com.coderhouse.models.Sale;
 import com.coderhouse.services.SaleService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/sales")
+@Tag(name="SaleController", description="Controlador para manejar ventas")
+
 
 public class SaleController {
 
 	@Autowired
 	private SaleService saleService;
 
+	@Operation(summary="Obtener la lista completa de ventas")
+	@ApiResponses(value= {
+			@ApiResponse(responseCode = "200", description = "Se obtuvo lista de ventas completa", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Sale.class))
+			})
+	})
 	@GetMapping
 	public ResponseEntity<List<Sale>> getAllSales() {
 
@@ -35,9 +50,14 @@ public class SaleController {
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
-
 	}
 
+	@Operation(summary="Obtener una venta determinada mediante ID")
+	@ApiResponses(value= {
+			@ApiResponse(responseCode = "200", description = "Se obtuvo venta con ID específico", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Sale.class))
+			})
+	})
 	@GetMapping("/{id}")
 	public ResponseEntity<Sale> findById(@PathVariable Long id) {
 		try {
@@ -50,6 +70,12 @@ public class SaleController {
 		}
 	}
 
+	@Operation(summary="Crear nueva venta")
+	@ApiResponses(value= {
+			@ApiResponse(responseCode = "200", description = "Se creó la venta correctamente", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Sale.class))
+			})
+	})
 	@PostMapping
 	public ResponseEntity<Sale> createSale(@RequestBody Sale sale) {
 		try {
@@ -60,6 +86,12 @@ public class SaleController {
 		}
 	}
 
+	@Operation(summary="Modifica venta mediante ID")
+	@ApiResponses(value= {
+			@ApiResponse(responseCode = "200", description = "Se modificó la venta correctamente", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Sale.class))
+			})
+	})
 	@PutMapping
 	public ResponseEntity<Sale> updateSale(@PathVariable Long id, @RequestBody Sale saleDetails) {
 		try {
@@ -72,7 +104,13 @@ public class SaleController {
 		}
 
 	}
-
+	
+	@Operation(summary="Se elimina venta con ID específico")
+	@ApiResponses(value= {
+			@ApiResponse(responseCode = "200", description = "Se eliminó el producto correctamente", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Sale.class))
+			})
+	})
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteSale(@PathVariable Long id) {
 		try {
