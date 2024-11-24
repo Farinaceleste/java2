@@ -21,8 +21,6 @@ public class SaleService {
 
 	@Autowired
 	private SaleRepository saleRepository;
-	private ClientRepository clientRepository;
-	private ProductRepository productRepository;
 
 	public List<Sale> getAllSales() {
 		return saleRepository.findAll();
@@ -42,7 +40,7 @@ public class SaleService {
 		Sale sale = saleRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Sale not found"));
 
-		sale.setName(saleDetails.getName());
+		sale.setfirstName(saleDetails.getFirstName());
 		sale.setClient(saleDetails.getClient());
 		
 		return saleRepository.save(sale);
@@ -54,10 +52,5 @@ public class SaleService {
 		}
 
 		saleRepository.deleteById(id);
-	}
-	
-	
-	
-	
-	
+	}	
 }

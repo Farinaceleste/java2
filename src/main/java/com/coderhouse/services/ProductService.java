@@ -17,31 +17,31 @@ public class ProductService implements ProductRestInterface{
 	@Autowired
 	private ProductRestApi productRestApi;
 
-	@Override
 	public List<Product> getAllProducts() {
 		return productRestApi.getAllProducts();
 	}
 	
-	@Override
-	public Product getProductById(String id) {
+	public Product getProductById(Long id) {
 		return productRestApi.getProductById(id);
 	}
 	
-	@Override
-	public Product addProduct(Product product) {
-		return productRestApi.addProduct(product);
+	@Transactional
+	public Product createProduct(Product product) {
+		return productRestApi.createProduct(product);
 	}
 	
-	@Override
+	@Transactional
 	public Product updateProduct(Product product) {
 		return productRestApi.updateProduct(product);
 	}
-	
-	@Override
+
 	public void deleteProduct(Long id) {
-		return productRestApi.deleteProduct(id);
+		productRestApi.deleteProduct(id);
 	}
-	
-	
-	
+
+	@Override
+	public Product addProduct(Product product) {
+		return null;
+	}
+
 }

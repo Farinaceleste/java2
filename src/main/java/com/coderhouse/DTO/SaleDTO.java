@@ -5,7 +5,8 @@ import java.util.List;
 
 public class SaleDTO {
 
-	private String client_name;
+	private String client_firstName;
+	private String client_lastName;
 	private String client_email;
 	private Long client_id;
 	private Long productDetails;
@@ -13,10 +14,11 @@ public class SaleDTO {
 	private LocalDateTime purchaseDate;
 	
 
-	public SaleDTO(String client_name, String client_email, Long client_id, Long productDetails, Double totalAmount,
+	public SaleDTO(String client_firstName, String client_lastName, String client_email, Long client_id, Long productDetails, Double totalAmount,
 			LocalDateTime purchaseDate) {
 		super();
-		this.client_name = client_name;
+		this.client_firstName = client_firstName;
+		this.client_lastName = client_lastName;
 		this.client_email = client_email;
 		this.client_id = client_id;
 		this.productDetails = productDetails;
@@ -25,13 +27,23 @@ public class SaleDTO {
 	}
 
 
-	public String getClient_name() {
-		return client_name;
+	public String getClient_firstName() {
+		return client_firstName;
 	}
 
 
-	public void setClient_name(String client_name) {
-		this.client_name = client_name;
+	public void setClient_firstName(String client_firstName) {
+		this.client_firstName = client_firstName;
+	}
+
+
+	public String getClient_lastName() {
+		return client_lastName;
+	}
+
+
+	public void setClient_lastName(String client_lastName) {
+		this.client_lastName = client_lastName;
 	}
 
 
@@ -87,14 +99,10 @@ public class SaleDTO {
 
 	@Override
 	public String toString() {
-		return "SaleDTO [client_name=" + client_name + ", client_email=" + client_email + ", client_id=" + client_id
-				+ ", productDetails=" + productDetails + ", totalAmount=" + totalAmount + ", purchaseDate="
-				+ purchaseDate + "]";
+		return "SaleDTO [client_firstName=" + client_firstName + ", client_lastName=" + client_lastName
+				+ ", client_email=" + client_email + ", client_id=" + client_id + ", productDetails=" + productDetails
+				+ ", totalAmount=" + totalAmount + ", purchaseDate=" + purchaseDate + "]";
 	}
 
 
-
-	
-	
-	
 }

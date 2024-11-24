@@ -33,7 +33,7 @@ public class ProductRestApi implements ProductRestInterface {
 	}
 
 	@Override
-	public Product getProductById(String id) {
+	public Product getProductById(Long id) {
 		try {
 			String url = BASE_URL + "/" + id;
 			return restTemplate.getForObject(url, Product.class);
@@ -43,11 +43,11 @@ public class ProductRestApi implements ProductRestInterface {
 	}
 
 	@Override
-	public Product addProduct(Product product) {
+	public Product createProduct(Product product) {
 		try {
 			return restTemplate.postForObject(BASE_URL, product, Product.class);
 		} catch (Exception e){
-			throw new RuntimeException("Error al agregar producto", e);
+			throw new RuntimeException("Error al crear producto", e);
 		}
 	}
 
@@ -71,4 +71,11 @@ public class ProductRestApi implements ProductRestInterface {
 			throw new RuntimeException("Error al eliminar producto", e);
 		}
 	}
+
+	@Override
+	public Product addProduct(Product product) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

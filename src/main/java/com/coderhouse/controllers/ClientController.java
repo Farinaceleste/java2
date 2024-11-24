@@ -2,9 +2,9 @@ package com.coderhouse.controllers;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,13 +35,13 @@ public class ClientController {
 	@Autowired
 	private ClientService clientService;
 	
-	@Operation(summary="Devuelve lista completa de clientes")
-	@ApiResponses(value= {
-			@ApiResponse(responseCode = "200", description = "Se obtuvo lista completa de clientes correctamente", content = {
-					@Content(mediaType = "application/json", schema = @Schema(implementation = Client.class))
-			})
+	@Operation(summary = "Obtener lista completa de todos los clientes")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Lista de clientes obtenida correctamente", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Client.class)) }),
+			@ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content)
 	})
-	@GetMapping
+	@GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<List<Client>> getAllClients() {
 
 		try {
@@ -52,13 +52,12 @@ public class ClientController {
 		}
 	}
 
-	@Operation(summary="Busca cliente mediante ID")
-	@ApiResponses(value= {
-			@ApiResponse(responseCode = "200", description = "Se encontró el cliente correctamente", content = {
-					@Content(mediaType = "application/json", schema = @Schema(implementation = Client.class))
-			})
-	})
-	@GetMapping("/{id}")
+	@Operation(summary = "Obtener cliente por ID")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Cliente encontrado correctamente", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Client.class)) }),
+			@ApiResponse(responseCode = "404", description = "Cliente no encontrado", content = @Content) })
+	@GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<Client> findById(@PathVariable Long id) {
 		try {
 			Client client = clientService.findClientById(id);
@@ -70,13 +69,12 @@ public class ClientController {
 		}
 	}
 
-	@Operation(summary="Crear nuevo cliente")
-	@ApiResponses(value= {
-			@ApiResponse(responseCode = "200", description = "Se creó nuevo cliente", content = {
-					@Content(mediaType = "application/json", schema = @Schema(implementation = Client.class))
-			})
-	})
-	@PostMapping
+	@Operation(summary = "Agregar nuevo cliente")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "201", description = "Cliente agregado correctamente", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Client.class)) }),
+			@ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content) })
+	@PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<Client> createClient(@RequestBody Client client) {
 		try {
 			Client createdClient = clientService.saveClient(client);
@@ -86,13 +84,13 @@ public class ClientController {
 		}
 	}
 	
-	@Operation(summary="Modifica cliente mediante ID")
-	@ApiResponses(value= {
-			@ApiResponse(responseCode = "200", description = "Se modificó el cliente correctamente", content = {
-					@Content(mediaType = "application/json", schema = @Schema(implementation = Client.class))
-			})
-	})
-	@PutMapping
+	@Operation(summary = "Modificar datos de un cliente existente")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Cliente modificado correctamente", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Client.class)) }),
+			@ApiResponse(responseCode = "404", description = "Cliente no encontrado", content = @Content) })
+	
+	@PutMapping(value = "/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<Client> updateClient(@PathVariable Long id, @RequestBody Client clientDetails) {
 		try {
 			Client updatedClient = clientService.updateClient(id, clientDetails);
@@ -105,13 +103,12 @@ public class ClientController {
 
 	}
 	
-	@Operation(summary="Elimina cliente mediante ID")
-	@ApiResponses(value= {
-			@ApiResponse(responseCode = "200", description = "Se eliminó el cliente correctamente", content = {
-					@Content(mediaType = "application/json", schema = @Schema(implementation = Client.class))
-			})
-	})
-	@DeleteMapping("/{id}")
+	@Operation(summary = "Eliminar un alumno existente")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "204", description = "Cliente eliminado correctamente", content = @Content),
+			@ApiResponse(responseCode = "404", description = "Cliente no encontrado", content = @Content) })
+	
+	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> deleteClient(@PathVariable Long id) {
 		try {
 			clientService.deleteClient(id);

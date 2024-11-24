@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.coderhouse.models.Client;
 import com.coderhouse.models.Product;
 import com.coderhouse.models.Sale;
 import com.coderhouse.services.SaleService;
@@ -35,13 +37,13 @@ public class SaleController {
 	@Autowired
 	private SaleService saleService;
 
-	@Operation(summary="Obtener la lista completa de ventas")
-	@ApiResponses(value= {
-			@ApiResponse(responseCode = "200", description = "Se obtuvo lista de ventas completa", content = {
-					@Content(mediaType = "application/json", schema = @Schema(implementation = Sale.class))
-			})
+	@Operation(summary = "Obtener lista completa de ventas")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Lista de ventas obtenida correctamente", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Sale.class)) }),
+			@ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content)
 	})
-	@GetMapping
+	@GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<List<Sale>> getAllSales() {
 
 		try {
@@ -52,13 +54,12 @@ public class SaleController {
 		}
 	}
 
-	@Operation(summary="Obtener una venta determinada mediante ID")
-	@ApiResponses(value= {
-			@ApiResponse(responseCode = "200", description = "Se obtuvo venta con ID específico", content = {
-					@Content(mediaType = "application/json", schema = @Schema(implementation = Sale.class))
-			})
-	})
-	@GetMapping("/{id}")
+	@Operation(summary = "Obtener venta por ID")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Venta encontrada correctamente", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Sale.class)) }),
+			@ApiResponse(responseCode = "404", description = "Venta no encontrada", content = @Content) })
+	@GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<Sale> findById(@PathVariable Long id) {
 		try {
 			Sale sale = saleService.findSaleById(id);
@@ -70,13 +71,12 @@ public class SaleController {
 		}
 	}
 
-	@Operation(summary="Crear nueva venta")
-	@ApiResponses(value= {
-			@ApiResponse(responseCode = "200", description = "Se creó la venta correctamente", content = {
-					@Content(mediaType = "application/json", schema = @Schema(implementation = Sale.class))
-			})
-	})
-	@PostMapping
+	@Operation(summary = "Crear nueva venta")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "201", description = "Venta creada correctamente", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Sale.class)) }),
+			@ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content) })
+	@PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<Sale> createSale(@RequestBody Sale sale) {
 		try {
 			Sale createdSale = saleService.saveSale(sale);
@@ -86,13 +86,12 @@ public class SaleController {
 		}
 	}
 
-	@Operation(summary="Modifica venta mediante ID")
-	@ApiResponses(value= {
-			@ApiResponse(responseCode = "200", description = "Se modificó la venta correctamente", content = {
-					@Content(mediaType = "application/json", schema = @Schema(implementation = Sale.class))
-			})
-	})
-	@PutMapping
+	@Operation(summary = "Modificar venta")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Venta modificada correctamente", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Sale.class)) }),
+			@ApiResponse(responseCode = "404", description = "Venta no encontrada", content = @Content) })
+	@PutMapping(value = "/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<Sale> updateSale(@PathVariable Long id, @RequestBody Sale saleDetails) {
 		try {
 			Sale updatedSale = saleService.updateSale(id, saleDetails);
@@ -105,13 +104,12 @@ public class SaleController {
 
 	}
 	
-	@Operation(summary="Se elimina venta con ID específico")
-	@ApiResponses(value= {
-			@ApiResponse(responseCode = "200", description = "Se eliminó el producto correctamente", content = {
-					@Content(mediaType = "application/json", schema = @Schema(implementation = Sale.class))
-			})
-	})
-	@DeleteMapping("/{id}")
+
+	@Operation(summary = "Eliminar una venta mediante ID")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "204", description = "Venta eliminada correctamente", content = @Content),
+			@ApiResponse(responseCode = "404", description = "Venta no encontrada", content = @Content) })
+	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> deleteSale(@PathVariable Long id) {
 		try {
 			saleService.deleteSale(id);

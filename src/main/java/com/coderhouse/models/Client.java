@@ -31,11 +31,10 @@ public class Client {
     private String firstName;
     @Schema(description="Client last name", requiredMode = Schema.RequiredMode.REQUIRED)
     private String lastName;
+    @Schema(description="Client doc Number", requiredMode = Schema.RequiredMode.REQUIRED)
+    private Long docNumber;
     @Schema(description="Creation date", requiredMode = Schema.RequiredMode.REQUIRED)
     private LocalDateTime createdAt = LocalDateTime.now();
-    
-    @Column(unique = true, nullable = false)
-    private String docNumber;
 
     @Column(unique = true, nullable = false)
     private String email;

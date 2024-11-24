@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
+import com.coderhouse.apis.ProductRestApi;
+import com.coderhouse.models.Client;
 import com.coderhouse.models.Product;
+import com.coderhouse.models.Sale;
 import com.coderhouse.services.ProductService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,20 +38,19 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class ProductController {
 
 	@Autowired
-	private ProductService productService;
+	private ProductRestApi productRestApi;
 
-	@Operation(summary="Obtener la lista completa de productos")
-	@ApiResponses(value= {
-			@ApiResponse(responseCode = "200", description = "Se obtuvo lista de productos de forma correcta", content = {
-					@Content(mediaType = "application/json", schema = @Schema(implementation = Product.class))
-			})
+	@Operation(summary = "Obtener lista completa de productos")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Lista de productos obtenida correctamente", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Product.class)) }),
+			@ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content)
 	})
-	
-	@GetMapping(produces= {MediaType.APPLICATION_JSON_VALUE})
+	@GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<List<Product>> getAllProducts() {
 
 		try {
-			List<Product> products = productService.getAllProducts();
+			List<Product> products = productRestApi.getAllProducts();
 			return ResponseEntity.ok(products);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -56,16 +58,15 @@ public class ProductController {
 
 	}
 
-	@Operation(summary="Obtener un producto determinado mediante ID")
-	@ApiResponses(value= {
-			@ApiResponse(responseCode = "200", description = "Se obtuvo producto con ID específico", content = {
-					@Content(mediaType = "application/json", schema = @Schema(implementation = Product.class))
-			})
-	})
-	@GetMapping("/{id}")
+	@Operation(summary = "Obtener producto mediante ID")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Producto obtenido correctamente", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Product.class)) }),
+			@ApiResponse(responseCode = "404", description = "Producto no encontrado", content = @Content) })
+	@GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<Product> findById(@PathVariable Long id) {
 		try {
-			Product product = productService.findProductById(id);
+			Product product = productRestApi.getProductById(id);
 			return ResponseEntity.ok(product);
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.notFound().build();
@@ -74,32 +75,31 @@ public class ProductController {
 		}
 	}
 
-	@Operation(summary="Crear nuevo producto")
-	@ApiResponses(value= {
-			@ApiResponse(responseCode = "200", description = "Se creó el producto", content = {
-					@Content(mediaType = "application/json", schema = @Schema(implementation = Product.class))
-			})
-	})
-	@PostMapping
+	@Operation(summary = "Crear nuevo producto")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "201", description = "Producto creado correctamente", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Product.class)) }),
+			@ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content) })
+	@PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<Product> createProduct(@RequestBody Product product) {
 		try {
-			Product createdProduct = productService.saveProduct(product);
+			Product createdProduct = productRestApi.createProduct(product);
 			return ResponseEntity.ok(createdProduct);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
 
-	@Operation(summary="Actualizar producto")
-	@ApiResponses(value= {
-			@ApiResponse(responseCode = "200", description = "Se actualizó producto de forma correcta", content = {
-					@Content(mediaType = "application/json", schema = @Schema(implementation = Product.class))
-			})
-	})
-	@PutMapping
+	@Operation(summary = "Modificar producto")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Producto modificado correctamente", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Product.class)) }),
+			@ApiResponse(responseCode = "404", description = "Producto no encontrado", content = @Content) })
+	@PutMapping(value = "/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product productDetails) {
 		try {
-			Product updatedProduct = productService.updateProduct(id, productDetails);
+			productDetails.setId(id);
+			Product updatedProduct = productRestApi.updateProduct(productDetails);
 			return ResponseEntity.ok(updatedProduct);
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.notFound().build();
@@ -108,16 +108,14 @@ public class ProductController {
 		}
 	}
 
-	@Operation(summary="Eliminar producto mediante ID")
-	@ApiResponses(value= {
-			@ApiResponse(responseCode = "200", description = "Se eliminó producto con ID indicado.", content = {
-					@Content(mediaType = "application/json", schema = @Schema(implementation = Product.class))
-			})
-	})
-	@DeleteMapping("/{id}")
+	@Operation(summary = "Eliminar un producto mediante ID")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "204", description = "Producto eliminado correctamente", content = @Content),
+			@ApiResponse(responseCode = "404", description = "Producto no encontrada", content = @Content) })
+	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
 		try {
-			productService.deleteProduct(id);
+			productRestApi.deleteProduct(id);
 			return ResponseEntity.noContent().build();
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.notFound().build();

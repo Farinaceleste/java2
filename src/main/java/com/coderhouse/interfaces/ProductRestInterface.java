@@ -8,11 +8,13 @@ public interface ProductRestInterface {
 	
 	public List<Product> getAllProducts();
 	
-	public Product getProductById(String id);
+	public Product getProductById(Long id);
 	
 	public Product addProduct(Product product);
 	
 	public Product updateProduct(Product product);
 	
 	public void deleteProduct(Long id);
+
+	Product createProduct(Product product);
 }
