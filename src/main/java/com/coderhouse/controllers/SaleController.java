@@ -60,7 +60,7 @@ public class SaleController {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = Sale.class)) }),
 			@ApiResponse(responseCode = "404", description = "Venta no encontrada", content = @Content) })
 	@GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<Sale> findById(@PathVariable Long id) {
+	public ResponseEntity<Sale> findById(@PathVariable Integer id) {
 		try {
 			Sale sale = saleService.findSaleById(id);
 			return ResponseEntity.ok(sale);
@@ -92,7 +92,7 @@ public class SaleController {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = Sale.class)) }),
 			@ApiResponse(responseCode = "404", description = "Venta no encontrada", content = @Content) })
 	@PutMapping(value = "/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<Sale> updateSale(@PathVariable Long id, @RequestBody Sale saleDetails) {
+	public ResponseEntity<Sale> updateSale(@PathVariable Integer id, @RequestBody Sale saleDetails) {
 		try {
 			Sale updatedSale = saleService.updateSale(id, saleDetails);
 			return ResponseEntity.ok(updatedSale);
@@ -110,7 +110,7 @@ public class SaleController {
 			@ApiResponse(responseCode = "204", description = "Venta eliminada correctamente", content = @Content),
 			@ApiResponse(responseCode = "404", description = "Venta no encontrada", content = @Content) })
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> deleteSale(@PathVariable Long id) {
+	public ResponseEntity<Void> deleteSale(@PathVariable Integer id) {
 		try {
 			saleService.deleteSale(id);
 			return ResponseEntity.noContent().build();

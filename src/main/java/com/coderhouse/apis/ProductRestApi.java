@@ -33,7 +33,7 @@ public class ProductRestApi implements ProductRestInterface {
 	}
 
 	@Override
-	public Product getProductById(Long id) {
+	public Product getProductById(Integer id) {
 		try {
 			String url = BASE_URL + "/" + id;
 			return restTemplate.getForObject(url, Product.class);
@@ -63,7 +63,7 @@ public class ProductRestApi implements ProductRestInterface {
 	}
 
 	@Override
-	public void deleteProduct(Long id) {
+	public void deleteProduct(Integer id) {
 		try {
 			String url = BASE_URL + "/" + id;
 			restTemplate.delete(url);

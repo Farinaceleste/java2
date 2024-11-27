@@ -14,7 +14,7 @@ public class ClientRestApi implements ClientRestInterface{
 	}
 
 	@Override
-	public Client getClientById(String id) {
+	public Client getClientById(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -32,7 +32,7 @@ public class ClientRestApi implements ClientRestInterface{
 	}
 
 	@Override
-	public void deleteClient(String id) {
+	public void deleteClient(Integer id) {
 		// TODO Auto-generated method stub
 		
 	}

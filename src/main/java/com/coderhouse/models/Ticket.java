@@ -2,7 +2,8 @@ package com.coderhouse.models;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
@@ -35,12 +36,12 @@ public class Ticket implements Serializable{
 	
 	private BigDecimal total;
 	
-	@ManyToOne
-	@JoinColumn(name="clientId")
-	private Client client;
+    @ManyToOne
+    @JoinColumn(name = "id")  
+    private Client client;
 	
 	@OneToMany(mappedBy="ticket", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
-	private Set<Line> lines;
+    private Set<Line> lines = new HashSet<>();
 	
 	public Ticket() {
 		
@@ -66,8 +67,8 @@ public class Ticket implements Serializable{
 		return date;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setDate(java.util.Date date1) {
+		this.date = (Date) date1;
 	}
 
 	public BigDecimal getTotal() {
@@ -123,6 +124,11 @@ public class Ticket implements Serializable{
 			builder.append("lines=").append(lines);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	public void addLine(Line line) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

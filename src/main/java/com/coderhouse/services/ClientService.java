@@ -20,7 +20,7 @@ public class ClientService {
 		return clientRepository.findAll();
 	}
 
-	public Client findClientById(Long id) {
+	public Client findClientById(Integer id) {
 		return clientRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Client not found"));
 	}
 
@@ -30,12 +30,12 @@ public class ClientService {
 	}
 
 	@Transactional
-	public Client updateClient(Long id, Client clientDetails) {
+	public Client updateClient(Integer id, Client clientDetails) {
 		Client client = clientRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Client not found"));
 
-		client.setName(clientDetails.getName());
-		client.setLastname(clientDetails.getLastname());
+		client.setFirstName(clientDetails.getFirstName());
+		client.setLastName(clientDetails.getLastName());
 		client.setEmail(clientDetails.getEmail());
 
 		if (clientDetails.getDocNumber() != null || !clientDetails.getDocNumber().isEmpty()) {
@@ -45,7 +45,7 @@ public class ClientService {
 		return clientRepository.save(client);
 	}
 
-	public void deleteClient(Long id) {
+	public void deleteClient(Integer id) {
 		if (!clientRepository.existsById(id)) {
 			throw new IllegalArgumentException("Client not found");
 		}

@@ -9,16 +9,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Entity
 @Schema(description="Sale Model")
 @Table(name = "Sales")
@@ -27,27 +23,65 @@ public class Sale {
     @Schema(description="Sale ID", requiredMode = Schema.RequiredMode.REQUIRED)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "name")
-    @Schema(description="Sale name", requiredMode = Schema.RequiredMode.REQUIRED)
-    private String name;
+    @Schema(description="Client Name", requiredMode = Schema.RequiredMode.REQUIRED)
+    private String firstName;
     @Schema(description="Creation Date", requiredMode = Schema.RequiredMode.REQUIRED)
     private LocalDateTime createdAt = LocalDateTime.now();
     
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id", nullable = false)
-    private Client client;
+    public Integer getId() {
+		return id;
+	}
 
-    @ManyToMany
-    @JoinTable(
-        name = "sale_products",
-        joinColumns = @JoinColumn(name = "sale_id"),
-        inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    
-    @JsonIgnore
-    private List<Product> products = new ArrayList<>();
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getfirstName() {
+		return firstName;
+	}
+
+	public void setfirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
+	public List<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
+	   @ManyToOne
+	    @JoinColumn(name = "client_id", nullable = false)
+	    private Client client;
+
+	   @ManyToMany
+	   @JoinTable(
+	       name = "sale_products",
+	       joinColumns = @JoinColumn(name = "sale_id"), 
+	       inverseJoinColumns = @JoinColumn(name = "product_id") 
+	   )
+	   @JsonIgnore
+	   private List<Product> products = new ArrayList<>();
 
 }

@@ -1,17 +1,11 @@
 package com.coderhouse.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.coderhouse.DTO.ProductDTO;
-import com.coderhouse.DTO.SaleDTO;
-import com.coderhouse.models.Product;
 import com.coderhouse.models.Sale;
-import com.coderhouse.repositories.ClientRepository;
-import com.coderhouse.repositories.ProductRepository;
 import com.coderhouse.repositories.SaleRepository;
 
 import jakarta.transaction.Transactional;
@@ -26,7 +20,7 @@ public class SaleService {
 		return saleRepository.findAll();
 	}
 
-	public Sale findSaleById(Long id) {
+	public Sale findSaleById(Integer id) {
 		return saleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Sale not found"));
 	}
 
@@ -36,17 +30,17 @@ public class SaleService {
 	}
 
 	@Transactional
-	public Sale updateSale(Long id, Sale saleDetails) {
+	public Sale updateSale(Integer id, Sale saleDetails) {
 		Sale sale = saleRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Sale not found"));
 
-		sale.setfirstName(saleDetails.getFirstName());
+		sale.setfirstName(saleDetails.getfirstName());
 		sale.setClient(saleDetails.getClient());
 		
 		return saleRepository.save(sale);
 	}
 
-	public void deleteSale(Long id) {
+	public void deleteSale(Integer id) {
 		if (!saleRepository.existsById(id)) {
 			throw new IllegalArgumentException("Sale not found");
 		}

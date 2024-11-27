@@ -8,13 +8,13 @@ public class SaleDTO {
 	private String client_firstName;
 	private String client_lastName;
 	private String client_email;
-	private Long client_id;
+	private Integer client_id;
 	private Long productDetails;
 	private Double totalAmount;
 	private LocalDateTime purchaseDate;
 	
 
-	public SaleDTO(String client_firstName, String client_lastName, String client_email, Long client_id, Long productDetails, Double totalAmount,
+	public SaleDTO(String client_firstName, String client_lastName, String client_email,Integer client_id, Long productDetails, Double totalAmount,
 			LocalDateTime purchaseDate) {
 		super();
 		this.client_firstName = client_firstName;
@@ -57,12 +57,12 @@ public class SaleDTO {
 	}
 
 
-	public Long getClient_id() {
+	public Integer getClient_id() {
 		return client_id;
 	}
 
 
-	public void setClient_id(Long client_id) {
+	public void setClient_id(Integer client_id) {
 		this.client_id = client_id;
 	}
 

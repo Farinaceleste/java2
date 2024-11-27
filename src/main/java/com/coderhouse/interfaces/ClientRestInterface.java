@@ -8,11 +8,11 @@ public interface ClientRestInterface {
 
 	public List<Client> getAllClients();
 	
-	public Client getClientById(String id);
+	public Client getClientById(Integer id);
 	
 	public Client addClient(Client client);
 	
 	public Client updateClient(Client client);
 	
-	public void deleteClient(String id);
+	public void deleteClient(Integer id);
 }

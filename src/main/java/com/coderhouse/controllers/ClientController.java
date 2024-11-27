@@ -58,7 +58,7 @@ public class ClientController {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = Client.class)) }),
 			@ApiResponse(responseCode = "404", description = "Cliente no encontrado", content = @Content) })
 	@GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<Client> findById(@PathVariable Long id) {
+	public ResponseEntity<Client> findById(@PathVariable Integer id) {
 		try {
 			Client client = clientService.findClientById(id);
 			return ResponseEntity.ok(client);
@@ -91,7 +91,7 @@ public class ClientController {
 			@ApiResponse(responseCode = "404", description = "Cliente no encontrado", content = @Content) })
 	
 	@PutMapping(value = "/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<Client> updateClient(@PathVariable Long id, @RequestBody Client clientDetails) {
+	public ResponseEntity<Client> updateClient(@PathVariable Integer id, @RequestBody Client clientDetails) {
 		try {
 			Client updatedClient = clientService.updateClient(id, clientDetails);
 			return ResponseEntity.ok(updatedClient);
@@ -109,7 +109,7 @@ public class ClientController {
 			@ApiResponse(responseCode = "404", description = "Cliente no encontrado", content = @Content) })
 	
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> deleteClient(@PathVariable Long id) {
+	public ResponseEntity<Void> deleteClient(@PathVariable Integer id) {
 		try {
 			clientService.deleteClient(id);
 			return ResponseEntity.noContent().build();

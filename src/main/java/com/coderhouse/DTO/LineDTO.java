@@ -10,7 +10,7 @@ public class LineDTO {
 
 		private String description;
 
-		private BigDecimal price;
+		private Integer price;
 
 		public Integer getLineId() {
 			return lineId;
@@ -36,11 +36,11 @@ public class LineDTO {
 			this.description = description;
 		}
 
-		public BigDecimal getPrice() {
+		public Integer getPrice() {
 			return price;
 		}
 
-		public void setPrice(BigDecimal price) {
+		public void setPrice(Integer price) {
 			this.price = price;
 		}
 

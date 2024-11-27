@@ -6,11 +6,11 @@ public class ProductDTO {
 	private String productName;
 	private int quantity;
 	private Double price;
-	private Long id;
+	private Integer id;
 	private String description;
 	
 
-	public ProductDTO(String productName, int quantity, Double price, Long id, String description) {
+	public ProductDTO(String productName, int quantity, Double price, Integer id, String description) {
 		super();
 		this.productName = productName;
 		this.quantity = quantity;
@@ -55,12 +55,12 @@ public class ProductDTO {
 	}
 
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

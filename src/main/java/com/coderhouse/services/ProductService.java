@@ -21,7 +21,7 @@ public class ProductService implements ProductRestInterface{
 		return productRestApi.getAllProducts();
 	}
 	
-	public Product getProductById(Long id) {
+	public Product getProductById(Integer id) {
 		return productRestApi.getProductById(id);
 	}
 	
@@ -35,7 +35,7 @@ public class ProductService implements ProductRestInterface{
 		return productRestApi.updateProduct(product);
 	}
 
-	public void deleteProduct(Long id) {
+	public void deleteProduct(Integer id) {
 		productRestApi.deleteProduct(id);
 	}
 

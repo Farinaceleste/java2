@@ -2,9 +2,11 @@ package com.coderhouse.DTO;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import com.coderhouse.models.Client;
+import com.coderhouse.models.Line;
 
 
 public class TicketDTO {
@@ -51,9 +53,7 @@ public class TicketDTO {
 	public void setLines(Set<LineDTO> lines) {
 		this.lines = lines;
 	}
-	
-	
-	
+
 	
 
 }

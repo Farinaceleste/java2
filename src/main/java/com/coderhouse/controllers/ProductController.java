@@ -64,7 +64,7 @@ public class ProductController {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = Product.class)) }),
 			@ApiResponse(responseCode = "404", description = "Producto no encontrado", content = @Content) })
 	@GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<Product> findById(@PathVariable Long id) {
+	public ResponseEntity<Product> findById(@PathVariable Integer id) {
 		try {
 			Product product = productRestApi.getProductById(id);
 			return ResponseEntity.ok(product);
@@ -96,7 +96,7 @@ public class ProductController {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = Product.class)) }),
 			@ApiResponse(responseCode = "404", description = "Producto no encontrado", content = @Content) })
 	@PutMapping(value = "/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product productDetails) {
+	public ResponseEntity<Product> updateProduct(@PathVariable Integer id, @RequestBody Product productDetails) {
 		try {
 			productDetails.setId(id);
 			Product updatedProduct = productRestApi.updateProduct(productDetails);
@@ -113,7 +113,7 @@ public class ProductController {
 			@ApiResponse(responseCode = "204", description = "Producto eliminado correctamente", content = @Content),
 			@ApiResponse(responseCode = "404", description = "Producto no encontrada", content = @Content) })
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+	public ResponseEntity<Void> deleteProduct(@PathVariable Integer id) {
 		try {
 			productRestApi.deleteProduct(id);
 			return ResponseEntity.noContent().build();

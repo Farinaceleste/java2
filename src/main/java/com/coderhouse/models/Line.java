@@ -13,8 +13,8 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 	@Entity
-	@Table(name="linea")
-	@NamedQuery(name="Linea.findAll", query="SELECT l FROM Linea l")
+	@Table(name="line")
+	@NamedQuery(name="Line.findAll", query="SELECT l FROM Line l")
 public class Line implements Serializable{
 	
 
@@ -28,15 +28,14 @@ public class Line implements Serializable{
 
 		private String description;
 
-		private BigDecimal price;
-
-		//bi-directional many-to-one association to Comprobante
+		private Integer price;
+		
 		@ManyToOne
-		@JoinColumn(name="ticketId")
+		@JoinColumn(name="ticket_id")
 		private Ticket ticket;
 
 		@ManyToOne
-		@JoinColumn(name="productId")
+		@JoinColumn(name="id")
 		private Product product;
 
 		public Line() {
@@ -73,12 +72,12 @@ public class Line implements Serializable{
 		}
 
 
-		public BigDecimal getPrice() {
+		public Integer getPrice() {
 			return price;
 		}
 
 
-		public void setProcec(BigDecimal price) {
+		public void setPrice(Integer price) {
 			this.price = price;
 		}
 
@@ -111,7 +110,7 @@ public class Line implements Serializable{
 		@Override
 		public String toString() {
 			StringBuilder builder = new StringBuilder();
-			builder.append("Linea [lineId=").append(lineId).append(", quantity=").append(quantity).append(", ");
+			builder.append("Line [lineId=").append(lineId).append(", quantity=").append(quantity).append(", ");
 			if (description != null)
 				builder.append("description=").append(description).append(", ");
 			if (price != null)
